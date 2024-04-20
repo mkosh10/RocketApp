@@ -35,15 +35,16 @@
             this.listViewDB = new System.Windows.Forms.ListView();
             this.refreshDbBtn = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
+            this.updateDB = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // emailBtn
             // 
-            this.emailBtn.Location = new System.Drawing.Point(866, 35);
+            this.emailBtn.Location = new System.Drawing.Point(869, 27);
             this.emailBtn.Name = "emailBtn";
             this.emailBtn.Size = new System.Drawing.Size(142, 43);
             this.emailBtn.TabIndex = 0;
-            this.emailBtn.Text = "send email";
+            this.emailBtn.Text = "Send Email";
             this.emailBtn.UseVisualStyleBackColor = true;
             this.emailBtn.Click += new System.EventHandler(this.emailBtnClick);
             // 
@@ -85,7 +86,7 @@
             // 
             // refreshDbBtn
             // 
-            this.refreshDbBtn.Location = new System.Drawing.Point(722, 35);
+            this.refreshDbBtn.Location = new System.Drawing.Point(547, 27);
             this.refreshDbBtn.Name = "refreshDbBtn";
             this.refreshDbBtn.Size = new System.Drawing.Size(110, 43);
             this.refreshDbBtn.TabIndex = 9;
@@ -104,11 +105,22 @@
             this.label2.TabIndex = 11;
             this.label2.Text = "Database";
             // 
+            // updateDB
+            // 
+            this.updateDB.Location = new System.Drawing.Point(706, 27);
+            this.updateDB.Name = "updateDB";
+            this.updateDB.Size = new System.Drawing.Size(117, 43);
+            this.updateDB.TabIndex = 12;
+            this.updateDB.Text = "Update DB";
+            this.updateDB.UseVisualStyleBackColor = true;
+            this.updateDB.Click += new System.EventHandler(this.UpdateDB_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1120, 557);
+            this.Controls.Add(this.updateDB);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.refreshDbBtn);
             this.Controls.Add(this.listViewDB);
@@ -133,6 +145,7 @@
         private System.Windows.Forms.ListView listViewDB;
         private System.Windows.Forms.Button refreshDbBtn;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Button updateDB;
     }
 }
 

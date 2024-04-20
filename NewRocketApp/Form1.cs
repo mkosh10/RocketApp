@@ -35,9 +35,7 @@ namespace NewRocketApp
 
         private void emailBtnClick(object sender, EventArgs e)
         {
-            SqliteDataAccess.ResetAllRocketsAsNotUpdated(); 
             ShowDB();
-            FillUpdateDb();
             SendEmail(GetUpcomoingLaunchesFromDB()); 
         }
 
@@ -54,6 +52,7 @@ namespace NewRocketApp
 
         private async void FillUpdateDb()
         {
+            SqliteDataAccess.ResetAllRocketsAsNotUpdated();
             var RocketListFromApi = await LaunchesInTheNextXDays(7);
 
             foreach(RocketDbModel rocket in RocketListFromApi)
@@ -203,5 +202,9 @@ namespace NewRocketApp
 
         }
 
+        private void UpdateDB_Click(object sender, EventArgs e)
+        {
+            FillUpdateDb(); 
+        }
     }
 }
