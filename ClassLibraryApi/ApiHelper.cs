@@ -14,7 +14,11 @@ namespace RocketLibrary
         public static void InitializeClient()
         {
             ApiClient = new HttpClient();
-            ApiClient.BaseAddress = new Uri("https://lldev.thespacedevs.com/2.2.0/launch/upcoming");
+            #if DEBUG
+                ApiClient.BaseAddress = new Uri("https://lldev.thespacedevs.com/2.2.0/launch/upcoming");
+            #else
+                ApiClient.BaseAddress = new Uri("https://ll.thespacedevs.com/2.2.0/launch/upcoming");
+            #endif
             ApiClient.DefaultRequestHeaders.Accept.Clear();
             ApiClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }

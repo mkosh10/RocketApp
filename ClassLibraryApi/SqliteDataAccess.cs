@@ -42,7 +42,6 @@ namespace RocketLibrary
                 int count = connection.QueryFirstOrDefault<int>(sqlCheckExistence, new { id = rocket.id });
                 if(count == 0)
                 {
-           
                     return false;
                 } else
                 { 
@@ -50,32 +49,27 @@ namespace RocketLibrary
                 }
             }
         } 
-        public static void UpdateRocketLaunch(RocketDbModel rocket)
+        public static void UpdateRocket(RocketDbModel rocket)
         {
             using (IDbConnection connection = new SQLiteConnection(LoadConnectionString()))
             {
                 string SelectLaunchDateFromDb = "SELECT launch_date_time FROM Rocket WHERE id = @RocketId";
                 DateTime DateTimeFromDb = connection.QueryFirstOrDefault<DateTime>(SelectLaunchDateFromDb, new { RocketId = rocket.id });
 
-                if (rocket.launch_date_time!= DateTimeFromDb)
+                if (rocket.launch_date_time != DateTimeFromDb)
                 {
-                    string sqlString = "UPDATE Rocket SET launch_date_time = @NewDate, is_updated = 1 WHERE id = @RocketId";
-                    connection.Execute(sqlString, new { NewDate = rocket.launch_date_time, RocketId = rocket.id });
+                    string sqlString = "UPDATE Rocket SET launch_date_time = @NewDate, is_updated = 1, last_updated = @LastUpdated WHERE id = @RocketId";
+                    connection.Execute(sqlString, new { NewDate = rocket.launch_date_time,LastUpdated = rocket.last_updated ,RocketId = rocket.id });
+                }
+
+                if (rocket.status == "Launch Failure")
+                {
+                    string sqlString = "UPDATE Rocket SET status = @NewStatus, is_updated = 1, last_updated = LastUpdated WHERE id = @RocketId";
+                    connection.Execute(sqlString, new { NewStatus = rocket.status, LastUpdated = rocket.last_updated, RocketId = rocket.id });
                 }
             }
         }
         
-        public static void UpdateRocketStatus(RocketDbModel rocket)
-        {
-            using (IDbConnection connection = new SQLiteConnection(LoadConnectionString()))
-            {
-                if(rocket.status == "Launch Failure")
-                {
-                    string sqlString = "UPDATE Rocket SET status = @NewStatus, is_updated = 1 WHERE id = @RocketId";
-                    connection.Execute(sqlString, new { NewStatus = rocket.status, RocketId = rocket.id });
-                }
-            }
-        }
         
         public static void DeleteRocket(RocketDbModel rocket)
         {

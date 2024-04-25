@@ -35,7 +35,6 @@ namespace NewRocketApp
 
         private void emailBtnClick(object sender, EventArgs e)
         {
-            ShowDB();
             SendEmail(GetUpcomoingLaunchesFromDB()); 
         }
 
@@ -59,13 +58,13 @@ namespace NewRocketApp
             {
                 if (SqliteDataAccess.CheckIfRocketExistsInDb(rocket))
                 {
-                    SqliteDataAccess.UpdateRocketLaunch(rocket);
-                    SqliteDataAccess.UpdateRocketStatus(rocket);
+                    SqliteDataAccess.UpdateRocket(rocket);
                 } else
                 {
                     SqliteDataAccess.SaveRocket(rocket);
                 }
             }
+            ShowDB();   
         }
 
         private List<RocketDbModel> GetUpcomoingLaunchesFromDB()
@@ -89,9 +88,9 @@ namespace NewRocketApp
         }
 
 
+
         private async Task GetLaunchesInTheNext7Days()
         {
-           
             var rocketList = await LaunchesInTheNextXDays(7);
             foreach (var rocket in rocketList)
             {
@@ -128,6 +127,26 @@ namespace NewRocketApp
             return rocketsLaunchedInNextXDays;  
         }
 
+        private List<RocketDbModel> GetOnlyUpdatedItemsFromDb()
+        {
+            List<RocketDbModel> RocketsFromDb = SqliteDataAccess.LoadRockets();
+            List<RocketDbModel> UpdatedItems = new List<RocketDbModel>();
+
+            DateTime dateNow = DateTime.Now;
+            TimeZoneInfo zoneInfo = TimeZoneInfo.Local;
+
+            foreach (RocketDbModel Item in RocketsFromDb)
+            {
+                DateTime rocketLaunchDate = TimeZoneInfo.ConvertTimeFromUtc(Item.launch_date_time, zoneInfo);
+                if (Item.is_updated == 1 && rocketLaunchDate >= dateNow)
+                {
+                    UpdatedItems.Add(Item);
+                }
+            }
+
+            return UpdatedItems;
+        }
+
 
 
         public void SendEmail(List<RocketDbModel> UpdatedItems)
@@ -156,6 +175,7 @@ namespace NewRocketApp
                 {
                     MailBody.Append("<h3 color=\"red\">" + rocket.name + "</h3>");
                     MailBody.Append("<h4> Status: " + rocket.status + "</h4>");
+                    MailBody.Append("<h4> Updated: " + rocket.is_updated + "</h4>");
                     MailBody.Append("<h4> Launch Date: " + rocket.launch_date_time + "</h4>");
                     MailBody.Append($"<img src=\"{rocket.img_url}\"  width=\"350\" height=\"300\"/>");
                 }
@@ -190,6 +210,12 @@ namespace NewRocketApp
             listViewAPI.Columns.Add("Upcoming launch dates", 170);
         }
 
+        private void SendOnlyUpdatedBtn_Click(object sender, EventArgs e)
+        {
+            List<RocketDbModel> UpdatedItems = GetOnlyUpdatedItemsFromDb();
+            SendEmail(UpdatedItems);
+        }
+
 
         private void RefreshDb_Click(object sender, EventArgs e)
         {
@@ -206,5 +232,7 @@ namespace NewRocketApp
         {
             FillUpdateDb(); 
         }
+
+     
     }
 }

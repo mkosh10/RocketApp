@@ -36,6 +36,7 @@
             this.refreshDbBtn = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.updateDB = new System.Windows.Forms.Button();
+            this.SendOnlyUpdatedBtn = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // emailBtn
@@ -115,11 +116,22 @@
             this.updateDB.UseVisualStyleBackColor = true;
             this.updateDB.Click += new System.EventHandler(this.UpdateDB_Click);
             // 
+            // SendOnlyUpdatedBtn
+            // 
+            this.SendOnlyUpdatedBtn.Location = new System.Drawing.Point(914, 424);
+            this.SendOnlyUpdatedBtn.Name = "SendOnlyUpdatedBtn";
+            this.SendOnlyUpdatedBtn.Size = new System.Drawing.Size(147, 52);
+            this.SendOnlyUpdatedBtn.TabIndex = 13;
+            this.SendOnlyUpdatedBtn.Text = "Send only updated rockets";
+            this.SendOnlyUpdatedBtn.UseVisualStyleBackColor = true;
+            this.SendOnlyUpdatedBtn.Click += new System.EventHandler(this.SendOnlyUpdatedBtn_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1120, 557);
+            this.Controls.Add(this.SendOnlyUpdatedBtn);
             this.Controls.Add(this.updateDB);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.refreshDbBtn);
@@ -146,6 +158,7 @@
         private System.Windows.Forms.Button refreshDbBtn;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button updateDB;
+        private System.Windows.Forms.Button SendOnlyUpdatedBtn;
     }
 }
 
